@@ -7,6 +7,7 @@ import { Suspense } from "react";
 export default async function detalje({params}) {
   const { id } = await params;
 const response = await fetch(`https://dummyjson.com/products/${id}`);
+    cache: "force-cache";
 const product = await response.json();
 console.log("id:", id);
     return (
