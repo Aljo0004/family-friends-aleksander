@@ -3,25 +3,28 @@ import Header from "../../../components/Header";
 import Image from "next/image";
 import { Suspense } from "react";
 
-export default async function detalje({ params }) {
-  const { id } = await params;
-
+export default function detalje({ params }) {
   return (
     <div>
       <Header />
       <Suspense fallback={<div className="p-4">Loading product...</div>}>
-        <ProductDetails id={id} />
+        <ProductDetailsWrapper params={params} />
       </Suspense>
     </div>
   );
 }
 
-async function ProductDetails({ id }) {
+async function ProductDetailsWrapper({ params }) {
+  const { id } = await params;
   const response = await fetch(`https://dummyjson.com/products/${id}`, {
     cache: "force-cache",
   });
   const product = await response.json();
 
+  return <ProductDetails product={product} />;
+}
+
+function ProductDetails({ product }) {
   return (
     <div>
       <Image
